@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kalkulator</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+<br><br>
+
+    <div class="w-64 mx-auto mt-20 p-5 bg-white rounded-lg shadow-lg">
+        <input type="text" id="display" class="w-full mb-3 p-3 border rounded text-right" disabled>
+        <div class="grid grid-cols-4 gap-2">
+            <button onclick="clearDisplay()" class="p-3 bg-gray-400 text-white rounded">C</button>
+            <button onclick="deleteLast()" class="p-3 bg-gray-400 text-white rounded">Del</button>
+            <button onclick="appendToDisplay('/')" class="p-3 bg-gray-400 text-white rounded">%</button>
+            <button onclick="appendToDisplay('*')" class="p-3 bg-gray-400 text-white rounded">x</button>
+            <button onclick="appendToDisplay('7')" class="p-3 bg-gray-400 text-white rounded">7</button>
+            <button onclick="appendToDisplay('8')" class="p-3 bg-gray-400 text-white rounded">8</button>
+            <button onclick="appendToDisplay('9')" class="p-3 bg-gray-400 text-white rounded">9</button>
+            <button onclick="appendToDisplay('-')" class="p-3 bg-gray-400 text-white rounded">-</button>
+            <button onclick="appendToDisplay('4')" class="p-3 bg-gray-400 text-white rounded">4</button>
+            <button onclick="appendToDisplay('5')" class="p-3 bg-gray-400 text-white rounded">5</button>
+            <button onclick="appendToDisplay('6')" class="p-3 bg-gray-400 text-white rounded">6</button>
+            <button onclick="appendToDisplay('+')" class="p-3 bg-gray-400 text-white rounded">+</button>
+            <button onclick="appendToDisplay('1')" class="p-3 bg-gray-400 text-white rounded">1</button>
+            <button onclick="appendToDisplay('2')" class="p-3 bg-gray-400 text-white rounded">2</button>
+            <button onclick="appendToDisplay('3')" class="p-3 bg-gray-400 text-white rounded">3</button>
+            <button onclick="calculate()" class="p-3 bg-gray-400 text-white rounded">=</button>
+            <button onclick="appendToDisplay('0')" class="p-3 bg-gray-400 text-white rounded">0</button>
+            <button onclick="appendToDisplay('.')" class="p-3 bg-gray-400 text-white rounded">.</button>
+        </div>
+    </div>
+</body>
+
+<script>
+
+function appendToDisplay(value) {
+    const display = document.getElementById('display');
+    const lastChar = display.value.slice(-1);
+
+    const operators = "+-*/";
+
+    // Jika yang ditekan operator
+    if (operators.includes(value)) {
+
+        // ❌ Tidak boleh mulai dengan +, *, /
+        if (display.value === "" && "+*/".includes(value)) {
+            return;
+        }
+
+        // ❌ Tidak boleh operator berurutan (misalnya ++, --, +/, dll)
+        if (operators.includes(lastChar)) {
+            return;
+        }
+    }
+
+    // Jika aman → tambahkan ke display
+    display.value += value;
+}
+
+function clearDisplay() {
+    document.getElementById('display').value = '';
+}
+
+function deleteLast() {
+    let display = document.getElementById('display');
+    display.value = display.value.slice(0, -1);
+}
+
+function calculate() {
+    let display = document.getElementById('display');
+    try {
+        display.value = eval(display.value);
+    } catch (error) {
+        display.value = 'Error';
+    }
+}
+
+</script>
+</html>
